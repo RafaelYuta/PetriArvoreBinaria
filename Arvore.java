@@ -1,5 +1,3 @@
-import org.w3c.dom.Node;
-
 public class Arvore {
     private No raiz;
 
@@ -39,7 +37,7 @@ public class Arvore {
         } else {
             No atual = this.raiz;
             No pai = null;
-            while (atual != noDeletar) {
+            while (atual.getValor() != noDeletar.getValor()) {
                 if (noDeletar.getValor() < atual.getValor()){
                     pai = atual;
                     atual = atual.getEsq();
@@ -65,10 +63,10 @@ public class Arvore {
             atual = null;
         } else {
             if (atual.getValor() < pai.getValor()){
-                pai.setEsq(null);
+                pai.setDir(null);
             }
             if(atual.getValor() > pai.getValor()){
-                pai.setDir(null);
+                pai.setEsq(null);
             }
         }
     }
