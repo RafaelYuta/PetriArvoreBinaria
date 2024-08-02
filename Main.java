@@ -7,7 +7,8 @@ public class Main {
         arvoreBinaria.inserir(37);
         arvoreBinaria.inserir(-3);
         arvoreBinaria.inserir(12);
-        arvoreBinaria.deletarNo(87);
-        arvoreBinaria.posOrdem(arvoreBinaria.getRaiz());
+        arvoreBinaria.deletarNo(37);
+
+        arvoreBinaria.emOrdem(arvoreBinaria.getRaiz());
     }
 }

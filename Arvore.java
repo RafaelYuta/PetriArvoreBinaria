@@ -31,14 +31,13 @@ public class Arvore {
     }
 
     public void deletarNo(int valor){
-        No noDeletar = new No(valor);
         if(this.raiz == null){
             return;
         } else {
             No atual = this.raiz;
             No pai = null;
-            while (atual.getValor() != noDeletar.getValor()) {
-                if (noDeletar.getValor() < atual.getValor()){
+            while (atual.getValor() != valor) {
+                if (valor < atual.getValor()){
                     pai = atual;
                     atual = atual.getEsq();
                 } else {
@@ -47,32 +46,54 @@ public class Arvore {
                 }
             }
             if(atual.getEsq() == null && atual.getDir() == null){
-                deletarNoFolha(pai, atual);
+                deletarNoFolha(pai, valor);
             }
             if(atual.getEsq() != null && atual.getDir() != null){
                 deletarNoDoisFilhos(pai, atual);
             }
             else{
-                deletarNoUmFilho(pai, atual);
+                deletarNoUmFilho(pai, atual, valor);
             }
         }
     }
 
-    public void deletarNoFolha(No pai, No atual){
-        if(pai == null){
-            atual = null;
+    public void deletarNoFolha(No pai, int valor){
+        if (pai == null) {
+            this.raiz = null;
         } else {
-            if (atual.getValor() < pai.getValor()){
+            if (valor < pai.getValor()) {
+                pai.setEsq(null);
+            } else {
                 pai.setDir(null);
             }
-            if(atual.getValor() > pai.getValor()){
-                pai.setEsq(null);
-            }
         }
     }
 
-    public void deletarNoUmFilho(No pai, No atual){
-        
+    public void deletarNoUmFilho(No pai, No atual, int valor){
+        if (pai == null) {
+            if (valor < atual.getValor()) {
+                this.raiz = atual.getEsq();
+            } else {
+                this.raiz = atual.getDir();
+            }
+            atual = null;
+        } else {
+            if (atual.getValor() < pai.getValor()) {
+                if (atual.getEsq() != null) {
+                    pai.setEsq(atual.getEsq());
+                } else {
+                    pai.setEsq(atual.getDir());
+                }
+            }
+            if (atual.getValor() > pai.getValor()) {
+                if (atual.getEsq() != null) {
+                    pai.setDir(atual.getEsq());
+                } else {
+                    pai.setDir(atual.getDir());
+                }
+            }
+        }
+
     }
 
     public void deletarNoDoisFilhos(No pai, No atual){
