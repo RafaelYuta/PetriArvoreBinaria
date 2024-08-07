@@ -71,7 +71,7 @@ public class Arvore {
 
     public void deletarNoUmFilho(No pai, No atual, int valor){
         if (pai == null) {
-            if (valor < atual.getValor()) {
+            if (atual.getEsq() != null) {
                 this.raiz = atual.getEsq();
             } else {
                 this.raiz = atual.getDir();
@@ -97,7 +97,37 @@ public class Arvore {
     }
 
     public void deletarNoDoisFilhos(No pai, No atual){
-        
+        No paiFixo = pai;
+        if (pai == null) {
+            pai = atual;
+            atual = atual.getEsq();
+            while (atual.getDir() != null) {
+                pai = atual;
+                atual = atual.getDir();
+            }
+            pai.setDir(atual.getEsq());
+            atual = null;
+        } else {
+            if (pai.getValor() < atual.getValor()) {
+                atual = atual.getEsq();
+                while (atual.getDir() != null) {
+                    pai = atual;
+                    atual = atual.getDir();
+                }
+                paiFixo = paiFixo.getDir();
+                paiFixo.setValor(atual.getValor());
+                pai.setDir(null);
+            } else {
+                atual = atual.getEsq();
+                while (atual.getDir() != null) {
+                    pai = atual;
+                    atual = atual.getDir();
+                }
+                paiFixo = paiFixo.getEsq();
+                paiFixo.setValor(atual.getValor());
+                pai.setDir(null);
+            }
+        }
     }
 
     public void preOrdem(No no) {
