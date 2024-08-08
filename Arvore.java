@@ -100,13 +100,19 @@ public class Arvore {
         No paiFixo = pai;
         if (pai == null) {
             pai = atual;
+            paiFixo = pai;
             atual = atual.getEsq();
             while (atual.getDir() != null) {
                 pai = atual;
                 atual = atual.getDir();
             }
-            pai.setDir(atual.getEsq());
-            atual = null;
+            if (atual.getDir() == null && atual.getEsq() == null) {
+                paiFixo.setValor(atual.getValor());
+                pai.setDir(null);
+            } else {
+                paiFixo.setValor(atual.getValor());
+                paiFixo.setEsq(atual.getEsq());
+            }
         } else {
             if (pai.getValor() < atual.getValor()) {
                 atual = atual.getEsq();
