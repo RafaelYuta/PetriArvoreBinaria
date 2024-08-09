@@ -37,22 +37,24 @@ public class Arvore {
             No atual = this.raiz;
             No pai = null;
             while (atual.getValor() != valor) {
+                pai = atual;
                 if (valor < atual.getValor()){
-                    pai = atual;
                     atual = atual.getEsq();
                 } else {
-                    pai = atual;
                     atual = atual.getDir();
                 }
+                if(atual.getDir() == null && atual.getEsq() == null){
+                    break;
+                }
             }
-            if(atual.getEsq() == null && atual.getDir() == null){
+            if(atual.getValor() != valor){
+                System.out.println(valor+" não existe na árvore");
+            } else if(atual.getEsq() == null && atual.getDir() == null){
                 deletarNoFolha(pai, valor);
-            }
-            if(atual.getEsq() != null && atual.getDir() != null){
+            } else if(atual.getEsq() != null && atual.getDir() != null){
                 deletarNoDoisFilhos(pai, atual);
-            }
-            else{
-                deletarNoUmFilho(pai, atual, valor);
+            } else {
+                deletarNoUmFilho(pai, atual);
             }
         }
     }
@@ -69,7 +71,7 @@ public class Arvore {
         }
     }
 
-    public void deletarNoUmFilho(No pai, No atual, int valor){
+    public void deletarNoUmFilho(No pai, No atual){
         if (pai == null) {
             if (atual.getEsq() != null) {
                 this.raiz = atual.getEsq();
@@ -106,12 +108,18 @@ public class Arvore {
                 pai = atual;
                 atual = atual.getDir();
             }
-            if (atual.getDir() == null && atual.getEsq() == null) {
+            if(paiFixo.getValor() == pai.getValor() && atual.getEsq() == null){
+                paiFixo.setValor(atual.getValor());
+                paiFixo.setEsq(null);
+            } else if (atual.getDir() == null && atual.getEsq() == null) {
                 paiFixo.setValor(atual.getValor());
                 pai.setDir(null);
-            } else {
+            } else if(paiFixo.getValor() == pai.getValor()){
                 paiFixo.setValor(atual.getValor());
                 paiFixo.setEsq(atual.getEsq());
+            } else {
+                paiFixo.setValor(atual.getValor());
+                pai.setDir(atual.getEsq());
             }
         } else {
             if (pai.getValor() < atual.getValor()) {
